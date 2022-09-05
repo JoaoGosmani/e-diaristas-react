@@ -1894,7 +1894,7 @@
     "prop-types" "^15.7.2"
     "regenerator-runtime" "^0.13.7"
 
-"@storybook/addons@6.5.9":
+"@storybook/addons@^6.5.9", "@storybook/addons@6.5.9":
   "integrity" "sha512-adwdiXg+mntfPocLc1KXjZXyLgGk7Aac699Fwe+OUYPEC5tW347Rm/kFatcE556d42o5czcRiq3ZSIGWnm9ieQ=="
   "resolved" "https://registry.npmjs.org/@storybook/addons/-/addons-6.5.9.tgz"
   "version" "6.5.9"
@@ -2588,7 +2588,7 @@
     "@testing-library/user-event" "^13.2.1"
     "ts-dedent" "^2.2.0"
 
-"@storybook/theming@6.5.9":
+"@storybook/theming@^6.5.9", "@storybook/theming@6.5.9":
   "integrity" "sha512-KM0AMP5jMQPAdaO8tlbFCYqx9uYM/hZXGSVUhznhLYu7bhNAIK7ZVmXxyE/z/khM++8eUHzRoZGiO/cwCkg9Xw=="
   "resolved" "https://registry.npmjs.org/@storybook/theming/-/theming-6.5.9.tgz"
   "version" "6.5.9"
