@@ -107,3 +107,42 @@ export const SectionButton = styled((props: PropsWithChildren<LinkProps>) => (
     width: 405px;
     height: 100%;
 `;
+
+export const SectionPictureContainer = styled("div")`
+    grid-area: picture;
+    position: relative;
+
+    img {
+        position: relative;
+        top: 35px;
+        width: 100%;
+    }
+
+    ${({ theme }) => theme.breakpoints.down("md")} {
+        display: none;
+    }
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        border-radius: 100%;
+    }
+
+    &::before {
+        top: 20%;
+        right: -5%;
+        width: 130px;
+        height: 130px;
+        background-color: ${({ theme }) => theme.palette.primary.main};
+        z-index: 2;
+    }
+
+    &::after {
+        bottom: 0;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        background-color: ${({ theme }) => theme.palette.grey[200]};
+    }
+`;
