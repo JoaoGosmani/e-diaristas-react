@@ -1,4 +1,11 @@
-import { Container, Divider, IconButton, MenuItem, MenuList, Toolbar } from "@mui/material";
+import { 
+    Container, 
+    Divider, 
+    IconButton, 
+    MenuItem, 
+    MenuList, 
+    Toolbar 
+} from "@mui/material";
 import RoundedButton from "ui/components/inputs/RoundedButton/RoundedButton";
 import Link from "ui/components/navigation/Link/Link";
 import { 
@@ -7,9 +14,12 @@ import {
     HeaderLogo,
     HeaderDrawer,
 } from "./Header.styled";
+import { useState } from "react";
+import useIsMobile from "data/hooks/useIsMobile";
 
 const Header: React.FC = () => {
-    return <HeaderMobile />;
+    const isMobile = useIsMobile();
+    return isMobile ? <HeaderMobile /> : <HeaderDesktop />;
 };
 
 export default Header;
@@ -40,16 +50,25 @@ const HeaderDesktop: React.FC = () => {
 };
 
 const HeaderMobile: React.FC = () => {
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
     return (
         <HeaderAppBar>
             <Toolbar component={Container}>
-                <IconButton edge={"start"} color={"inherit"}>
+                <IconButton 
+                edge={"start"} 
+                color={"inherit"}
+                onClick={() => setDrawerOpen(true)}
+                >
                     <i className="twf-bars" />
                 </IconButton>
                 <Link href="/">
                     <HeaderLogo src="/img/logos/logo.svg" alt="e-diaristas" />
                 </Link>
-                <HeaderDrawer open={false}>
+                <HeaderDrawer 
+                    open={isDrawerOpen} 
+                    onClose={() => setDrawerOpen(false)}
+                    onClick={() => setDrawerOpen(false)}    
+                >
                     <MenuList>
                         <Link href="/login" Component={MenuItem}>
                             Login
