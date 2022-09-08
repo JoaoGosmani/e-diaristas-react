@@ -45,7 +45,7 @@ const Presentation = () => {
             </ContainerStyled>
 
             <BottomButton>
-                <i className="twf-caret-dowm" />
+                <i className="twf-caret-down" />
             </BottomButton>
         </SectionContainer>
     );
