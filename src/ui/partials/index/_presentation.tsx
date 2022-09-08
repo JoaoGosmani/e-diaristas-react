@@ -6,6 +6,7 @@ import {
     SectionSubtitle,
     SectionTitle,
     SectionPictureContainer,
+    BottomButton,
 } from "./_presentation.styled";
 
 const Presentation = () => {
@@ -42,6 +43,10 @@ const Presentation = () => {
                     <img src={cleanerPicture} alt="" />
                 </SectionPictureContainer>
             </ContainerStyled>
+
+            <BottomButton>
+                <i className="twf-caret-dowm" />
+            </BottomButton>
         </SectionContainer>
     );
 };

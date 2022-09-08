@@ -5,6 +5,7 @@ import Link, { LinkProps } from "ui/components/navigation/Link/Link";
 import RoundedButton from "ui/components/inputs/RoundedButton/RoundedButton";
 
 export const SectionContainer = styled("section")`
+    position: relative;
     min-height: 250px;
     background-image: url("/img/home/living-room.svg");
     background-repeat: no-repeat;
@@ -144,5 +145,22 @@ export const SectionPictureContainer = styled("div")`
         width: 40px;
         height: 40px;
         background-color: ${({ theme }) => theme.palette.grey[200]};
+    }
+`;
+
+export const BottomButton = styled("span")`
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    background-color: ${({ theme }) => theme.palette.secondary.main};
+    padding: 11px 12px;
+    border-radius: 50px;
+    color: ${({ theme }) => theme.palette.common.white};
+    border: 5px solid currentColor;
+
+    i {
+        position: relative;
+        left: -2px;
     }
 `;

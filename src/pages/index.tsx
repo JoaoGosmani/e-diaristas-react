@@ -1,3 +1,4 @@
+import Advantages from '@partials/index/_advantages';
 import Presentation from '@partials/index/_presentation';
 import type { GetStaticProps, NextPage } from 'next'
 
@@ -13,6 +14,7 @@ const Index: NextPage<{ title: string }> = (props) => {
   return (
     <div>
       <Presentation />
+      <Advantages />
     </div>
   );
 };
