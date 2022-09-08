@@ -45,3 +45,42 @@ export const  ContainerStyled = styled(Container)`
         max-width: 350px;
     }
 `;
+
+export const SectionTitle = styled("h1")`
+    grid-area: title;
+    margin: 0;
+    position: relative;
+
+    .twf-search {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: ${({ theme }) => theme.palette.grey[200]};
+        border-radius: 50px;
+        padding: ${({ theme }) => theme.spacing(2)};
+        transform: translate(20%, -20%);
+    }
+
+    em {
+        font-style: inherit;
+    }
+
+    ${({ theme }) => theme.breakpoints.up("md")} {
+        border: 4px solid ${({ theme }) => theme.palette.grey[200]};
+        border-radius: 65px;
+        padding: ${({ theme }) => theme.spacing(4, 8)};
+        line-height: 30px;
+
+        em {
+            color: ${({ theme }) => theme.palette.primary.main};
+        }
+    }
+
+    ${({ theme }) => theme.breakpoints.down("md")} {
+        font-size: ${({ theme }) => theme.typography.body1.fontSize};
+        font-weight: normal;
+        .twf-search {
+            display: none;
+        }
+    }
+`;
