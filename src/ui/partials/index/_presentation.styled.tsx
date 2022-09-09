@@ -22,7 +22,7 @@ export const SectionContainer = styled("section")`
     }
 `;
 
-export const  ContainerStyled = styled(Container)`
+export const ContainerStyled = styled(Container)`
     display: grid;
     grid-template-rows: repeat(3, auto);
     grid-template-areas: 
