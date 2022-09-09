@@ -43,19 +43,19 @@ export const AccordionStyled = styled(Accordion)`
 
         &::before {
             background-color: transparent;
-
-            &,
-            &.Mui-expanded {
-                margin: -2px 0 0;
-            }
         }
+    
+        &,
+        &.Mui-expanded {
+            margin: -2px 0 0;
+        }
+    }
 
-        .MuiAccordionDetails-root {
+    .MuiAccordionDetails-root {
             padding-right: ${({ theme }) => theme.spacing(7)};
         }
 
-        .MuiAccordionSummary-expandIconWrapper {
-            color: ${({ theme }) => theme.palette.text.secondary};
-        }
+    .MuiAccordionSummary-expandIconWrapper {
+        color: ${({ theme }) => theme.palette.text.secondary};
     }
 `;
