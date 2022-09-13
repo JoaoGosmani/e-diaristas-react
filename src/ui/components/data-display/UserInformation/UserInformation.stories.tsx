@@ -15,7 +15,7 @@ export const Default = Template.bind({});
 
 Default.args = {
     name: "João Vitor Gosmani",
-    picture: "https.//github.com/JoaoGosmani.png",
+    picture: "https://github.com/JoaoGosmani.png",
     rating: 5,
     description: "Web Developer",
     isRating: true,
