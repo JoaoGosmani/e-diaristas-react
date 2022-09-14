@@ -18,7 +18,7 @@ export interface UserInformationProps {
     sx?: SystemProps;
 }
 
-const UserInformation:React.FC<PropsWithChildren<UserInformationProps>> = ({
+const UserInformation: React.FC<PropsWithChildren<UserInformationProps>> = ({
     sx,
     picture,
     name,

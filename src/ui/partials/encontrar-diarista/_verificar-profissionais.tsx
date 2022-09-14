@@ -55,15 +55,15 @@ const VerificarProfissionais: React.FC<PropsWithChildren> = () => {
                     </Button>
                 </FormElementsContainer>
 
-                {buscaFeita && (
-                    diaristas.length > 0 ? (
+                {buscaFeita && 
+                    (diaristas.length > 0 ? (
                         <ProfissionaisPaper>
                             <ProfissionaisContainer>
                                 {diaristas.map((diarista, index) => {
                                     return (
                                         <UserInformation 
                                             key={index}
-                                            name={diarista.nome_completo}
+                                            name={diarista.nomeCompleto}
                                             picture={diarista.foto_usuario ?? ""}
                                             rating={diarista.reputacao ?? 0}
                                             description={diarista.cidade}

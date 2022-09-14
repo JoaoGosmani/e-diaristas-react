@@ -37,9 +37,7 @@ export default class MyDocument extends Document {
         );
     }
 }
-
 MyDocument.getInitialProps = async (ctx) => {
-
     const originalRenderPage = ctx.renderPage;
 
     const cache = createEmotionCache();
@@ -60,7 +58,6 @@ MyDocument.getInitialProps = async (ctx) => {
       <style
         data-emotion={`${style.key} ${style.ids.join(' ')}`}
         key={style.key}
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: style.css }}
       />
     ));

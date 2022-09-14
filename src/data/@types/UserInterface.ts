@@ -1,5 +1,5 @@
 export interface UserShortInformationInterface {
-    nome_completo: string;
+    nomeCompleto: string;
     foto_usuario?: string;
     reputacao?: number;
     cidade: string;
