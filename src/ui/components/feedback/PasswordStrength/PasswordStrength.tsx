@@ -16,18 +16,18 @@ const PasswordStrength:React.FC<PropsWithChildren<PasswordStrengthProps>> = ({
   const strength = password ? passwordStrength(password).id : 0,
     strengthValue = ((strength + 1) / 4) * 100;
   return (
-      <div style={{ gridArea: "password-strength" }}>
-        <Typography variant="body2" component={"span"} color={"textSecondary"}>
-          Nível da senha:&nbsp;
-          <PasswordStrengthLabel value={strengthValue}>
-            {strength === 0 && "FRACA"}
-            {strength === 1 && "MÉDIA"}
-            {strength === 2 && "FORTE"}
-            {strength === 3 && "FORTE"}
-          </PasswordStrengthLabel>
-        </Typography>
-        <PasswordStrengthBar variant="determinate" value={strengthValue} />
-      </div>
+    <div style={{ gridArea: "password-strength"}}>
+      <Typography variant="body2" component={"span"} color={"textSecondary"}>
+        Nível da senha:&nbsp;
+        <PasswordStrengthLabel value={strengthValue}>
+          {strength === 0 && "FRACA"}
+          {strength === 1 && "MÉDIA"}
+          {strength === 2 && "FORTE"}
+          {strength === 3 && "FORTE"}
+        </PasswordStrengthLabel>
+      </Typography>
+      <PasswordStrengthBar variant="determinate" value={strengthValue} />
+    </div>
   );
 };
 
