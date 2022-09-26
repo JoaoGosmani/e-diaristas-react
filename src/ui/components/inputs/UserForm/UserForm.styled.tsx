@@ -29,3 +29,8 @@ export const NewContactData = styled(BaseGrid)`
             "confirmar-senha";
     }
 `;
+
+export const PictureSelection = styled(BaseGrid)`
+    grid-template-columns: 1fr;
+    padding: 0;
+`;
