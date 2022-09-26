@@ -7,5 +7,14 @@ export type FormValues = {
         nascimento: string;
         cpf: string;
         telefone: string;
-    }
+    };
+
+    pagamento: {
+        numero_cartao: string;
+        nome_cartao: string;
+        validade: string;
+        codigo: string;
+    };
+
+    pagamento_recusado?: string;
 };
