@@ -17,4 +17,15 @@ export type FormValues = {
     };
 
     pagamento_recusado?: string;
+
+    endereco: {
+        cep: string;
+        bairro: string;
+        estado: string;
+        cidade: string;
+        logradouro: string;
+        numero: string;
+        complemento: string;
+        codigo_ibge: string;
+    };
 };
