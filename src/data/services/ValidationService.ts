@@ -37,4 +37,15 @@ export const ValidationService = {
         if (rev != parseInt(cpf.charAt(10))) return false;
         return true;
       },
+      horarioDeAgendamento(data: string, hora: string): boolean {
+        const agora = Date.now(),
+          dataHora = new Date(data + "T" + hora).getTime(),
+          diferenca = (dataHora - agora) / 1000 / 60 / 60,
+          minHora = 48;
+
+        return diferenca > minHora;
+      },
+      hora(horario = ""): boolean {
+        return /^([01][0-9]|2[0-3]):([0-5][0-9])$/.test(horario);
+      },
 }; 
