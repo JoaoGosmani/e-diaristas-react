@@ -1,3 +1,4 @@
+import { Container } from "@mui/material";
 import { styled } from "@mui/material/styles";
 // import { } from "@mui/material";
 // import { UserFormProps } from "./UserForm";
@@ -85,3 +86,30 @@ export const AddressData = styled(BaseGrid)`
             "complemento";
     }
 `;
+
+export const FormContainerStyled = styled(Container)`
+    ${({ theme }) => theme.breakpoints.down("md")} {
+        .MuiPaper-root {
+            box-shadow: none;
+        }
+    }
+`;
+
+export const PageFormContainerStyled = styled("div", {
+    shouldForwardProp: (prop) => prop != "fullWidth",
+})<{ fullWidth?: boolean }>`
+    display: grid;
+    grid-template-columns: ${({ theme, fullWidth }) => 
+        fullWidth ? "1fr": "minmax(652px, 1fr) minmax(150px, 318px)"};
+    gap: ${({ theme }) => theme.spacing(6)};
+    align-items: start;
+    margin-bottom: ${({ theme }) => theme.spacing(8)};
+
+    ${({ theme }) => theme.breakpoints.down("md")} {
+        grid-template-columns: 1fr;
+        gap: ${({ theme }) => theme.spacing(3)};
+        .MuiPaper-root {
+            padding: 0;
+        }
+    }
+`; 
