@@ -28,8 +28,8 @@ export const FormSchemaService = {
                     nascimento: yup
                         .date()
                         .transform(DateService.transformDate)
-                        .min(DateService.maxAdultBirthday, "Digite uma data válida")
-                        .max(DateService.minAdultBirthday, "Proibido menores de idade")
+                        .min(DateService.maxAdultBirthday(), "Digite uma data válida")
+                        .max(DateService.minAdultBirthday(), "Proibido menores de idade")
                         .typeError("Digite uma data válida"),
                     cpf: yup.string().test("cpf", "CPF inválido", ValidationService.cpf),
                     telefone: yup
