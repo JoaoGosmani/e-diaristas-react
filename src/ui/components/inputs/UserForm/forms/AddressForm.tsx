@@ -64,7 +64,13 @@ export const AddressForm = () => {
                         loading={opcoesCidades.length === 0}
                         loadingText={"Carregando cidades..."}
                         noOptionsText={"Nenhuma cidade com esse nome"}
-                        renderInput={(params) => <TextField label={"Cidade"} {...params} />}
+                        renderInput={(params) => (
+                            <TextField 
+                                label={"Cidade"} 
+                                {...params}
+                                InputLabelProps={{ required: false }}
+                            />
+                        )}
                     />
                 )}    
             />

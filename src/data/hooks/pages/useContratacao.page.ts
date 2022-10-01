@@ -12,6 +12,8 @@ export default function useContratacao() {
                 FormSchemaService.address().concat(FormSchemaService.detalheServico())
             ),
         });
+
+    function onServiceFormSubmit(data: NovaDiariaFormDataInterface) {}
         
-    return { step, breadcrumbItems };
+    return { step, breadcrumbItems, serviceForm, onServiceFormSubmit };
 }
