@@ -28,4 +28,12 @@ export type FormValues = {
         complemento: string;
         codigo_ibge: string;
     };
+
+    faxina: {
+        data_atendimento: string;
+        hora_inicio: string;
+        hora_termino: string;
+        observacoes: string;
+        servico: number;
+    };
 };
