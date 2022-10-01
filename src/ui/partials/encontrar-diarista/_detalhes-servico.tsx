@@ -1,4 +1,4 @@
-import { Divider, Tooltip, Typography } from "@mui/material";
+import { Button, Container, Divider, Tooltip, Typography } from "@mui/material";
 import { FormValues } from "data/@types/forms/FormValues";
 import { ServicoInterface } from "data/@types/ServicoInterface";
 import React from "react";
@@ -10,9 +10,12 @@ import ToggleButtonGroup, {
 } from "ui/components/inputs/ToggleButtonGroup/ToggleButtonGroup";
 import { AddressForm } from "ui/components/inputs/UserForm/UserForm";
 import { ItemsContainer } from "./_detalhes-servico.styled";
+import TextField from "ui/components/inputs/TextField/TextField";
 
 interface DetalhesServicoProps {
     servicos?: ServicoInterface[];
+    comodos?: number;
+    podemosAtender?: boolean;
 }
 
 const houseParts = [
@@ -48,7 +51,11 @@ const houseParts = [
     },
 ];
 
-const DetalhesServico: React.FC<DetalhesServicoProps> = ({ servicos = [] }) => {
+const DetalhesServico: React.FC<DetalhesServicoProps> = ({ 
+    servicos = [], 
+    comodos = 0, 
+    podemosAtender, 
+}) => {
     const {
         register,
         control,
@@ -160,7 +167,8 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({ servicos = [] }) => {
                                     mask={"99:99"}
                                     label={"Hora Término"}
                                     error={errors?.faxina?.hora_termino != undefined}
-                                    helperText={errors?.faxina?.hora_termino?.message}      
+                                    helperText={errors?.faxina?.hora_termino?.message}  
+                                    fullWidth    
                                 />  
                             </div>
                         </Tooltip>
@@ -168,9 +176,42 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({ servicos = [] }) => {
                     )}
                 />
             </ItemsContainer>
-
             <Divider sx={{ my: 5 }} />
+                <Typography sx={{ fontWeight: "bold", pb: 2 }}>
+                    Observações
+                </Typography>
+
+                <TextField 
+                    label={"Quer acrescentar algum detalhe?"}
+                    {...register("faxina.observacoes")}
+                    required={false}
+                    fullWidth
+                    multiline
+                />
+                
+            <Divider sx={{ my: 5 }} />
+            <Typography sx={{ fontWeight: "bold", pb: 2 }}>
+                Qual o endereço onde será realizada a limpeza?
+            </Typography>
             <AddressForm />
+
+            {!podemosAtender && (
+                <Typography color={"error"}  align={"center"} sx={{ pb: 2 }}>
+                    Infelizmente ainda não atendemos na sua região
+                </Typography>
+            )}
+            
+
+            <Container sx={{ textAlign: "right" }}>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    type="submit"
+                    disabled={comodos === 0 || !podemosAtender}
+                >
+                    Ir para a identificação
+                </Button>
+            </Container>
         </div>
     );
 };
