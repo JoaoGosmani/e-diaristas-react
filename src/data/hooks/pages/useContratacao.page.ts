@@ -1,4 +1,9 @@
-import { CadastroClienteFormDataInterface, NovaDiariaFormDataInterface } from "data/@types/FormInterface";
+import { 
+    CadastroClienteFormDataInterface,
+    CredenciaisInterface,
+    LoginFormDataInterface,
+    NovaDiariaFormDataInterface
+} from "data/@types/FormInterface";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,6 +13,7 @@ import { ServicoInterface } from "data/@types/ServicoInterface";
 export default function useContratacao() {
     const [step, setStep] = useState(2),
         [hasLogin, setHasLogin] = useState(false),
+        [loginError, setLoginError] = useState(""),
         breadcrumbItems = ["Detalhes da diária", "Identificação", "Pagamento"],
         serviceForm = useForm<NovaDiariaFormDataInterface>({
             resolver: yupResolver(
@@ -18,6 +24,9 @@ export default function useContratacao() {
             resolver: yupResolver(
                 FormSchemaService.userData().concat(FormSchemaService.newContact())
             ),
+        }),
+        loginForm = useForm<LoginFormDataInterface<CredenciaisInterface>>({
+            resolver: yupResolver(FormSchemaService.login()),
         }),
         servicos: ServicoInterface[] = [
             {
@@ -45,6 +54,10 @@ export default function useContratacao() {
     function onServiceFormSubmit(data: NovaDiariaFormDataInterface) {}
 
     function onClientFormSubmit(data: CadastroClienteFormDataInterface) {}
+
+    function onLoginFormSubmit(
+        data: LoginFormDataInterface<CredenciaisInterface>
+    ) {}
         
     return { 
         step, 
@@ -57,5 +70,8 @@ export default function useContratacao() {
         clientForm,
         onClientFormSubmit,
         setStep,
+        loginForm,
+        onLoginFormSubmit,
+        loginError,
     };
 }

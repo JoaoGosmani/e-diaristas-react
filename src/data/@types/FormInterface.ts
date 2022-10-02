@@ -10,3 +10,12 @@ export interface NovaDiariaFormDataInterface {
 export interface CadastroClienteFormDataInterface {
     usuario: UserInterface;
 }
+
+export interface LoginFormDataInterface<T> {
+    login: T;
+}
+
+export interface CredenciaisInterface {
+    email: string;
+    password: string;
+}
