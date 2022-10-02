@@ -3,6 +3,9 @@ import { Controller, useFormContext } from "react-hook-form";
 import { FormValues } from "data/@types/forms/FormValues";
 import TextField from "ui/components/inputs/TextField/TextField";
 import TextFieldMask from "ui/components/inputs/TextFieldMask/TextFieldMask";
+import { useContext } from "react";
+import { UserContext } from "data/contexts/UserContext";
+import { TextFormatService } from "data/services/TextFormatService";
 
 interface UserDataFormProps {
     cadastro?: boolean
@@ -15,13 +18,14 @@ export const UserDataForm: React.FC<UserDataFormProps> = ({
         register,
         formState: { errors },
         control,
-    } = useFormContext<FormValues>();
+    } = useFormContext<FormValues>(),
+    { user } = useContext(UserContext).useState;
     
     return (
         <UserData>
             <TextField 
                 label={"Nome Completo"}
-                defaultValue={""}
+                defaultValue={user.nome_completo}
                 style={{ gridArea: "nome" }}
                 {...register("usuario.nome_completo")}
                 error={errors.usuario?.nome_completo != undefined}
@@ -29,7 +33,7 @@ export const UserDataForm: React.FC<UserDataFormProps> = ({
             />
             <Controller 
                 name={"usuario.nascimento"}
-                defaultValue={""}
+                defaultValue={TextFormatService.reverseDate(user.nascimento as string)}
                 control={control}
                 render={({ field: { ref, ...inputProps } }) => {
                     return (
@@ -46,7 +50,7 @@ export const UserDataForm: React.FC<UserDataFormProps> = ({
             />
             <Controller 
                 name={"usuario.cpf"}
-                defaultValue={""}
+                defaultValue={user.cpf}
                 control={control}
                 render={({ field: { ref, ...inputProps } }) => {
                     return (
@@ -64,7 +68,7 @@ export const UserDataForm: React.FC<UserDataFormProps> = ({
             />
             <Controller 
                 name={"usuario.telefone"}
-                defaultValue={""}
+                defaultValue={user.telefone}
                 control={control}
                 render={({ field: { ref, ...inputProps } }) => {
                     return (
