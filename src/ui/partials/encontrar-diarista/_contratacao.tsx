@@ -75,7 +75,7 @@ const Contratacao: React.FC<PropsWithChildren> = () => {
 
             <UserFormContainer>
                 <PageFormContainer fullWidth={step === 4}>
-                    <Paper>
+                    <Paper sx={{ p: 4 }}>
                         <FormProvider {...serviceForm}>
                             <form 
                                 onSubmit={serviceForm.handleSubmit(onServiceFormSubmit)}
