@@ -117,7 +117,7 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({
             <Divider sx={{ my: 5 }} />
 
             <Typography sx={{ fontWeight: "bold", mb: 2 }} >
-                Qual a data em que você gostaria de receber o/a diarista?
+                Qual a data em que você gostaria de receber o(a) diarista?
             </Typography>
 
             <ItemsContainer>
@@ -209,7 +209,7 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({
                     type="submit"
                     disabled={comodos === 0 || !podemosAtender}
                 >
-                    Ir para a identificação
+                    Ir para identificação
                 </Button>
             </Container>
         </div>

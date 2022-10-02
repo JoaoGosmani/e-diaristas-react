@@ -99,7 +99,7 @@ export const PageFormContainerStyled = styled("div", {
     shouldForwardProp: (prop) => prop != "fullWidth",
 })<{ fullWidth?: boolean }>`
     display: grid;
-    grid-template-columns: ${({ theme, fullWidth }) => 
+    grid-template-columns: ${({ fullWidth }) => 
         fullWidth ? "1fr": "minmax(652px, 1fr) minmax(150px, 318px)"};
     gap: ${({ theme }) => theme.spacing(6)};
     align-items: start;
