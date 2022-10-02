@@ -1,14 +1,16 @@
 import { Button, Container, Divider, Typography } from "@mui/material";
 import React from "react";
+import { LoginForm } from "ui/components/inputs/UserForm/forms/LoginForm";
 import NewContactForm from "ui/components/inputs/UserForm/forms/NewContactForm";
 import {
     PictureForm,
-    UserDataForm
+    UserDataForm,
 } from "ui/components/inputs/UserForm/UserForm";
+import { LoginButtonsContainer } from "./_cadastro-cliente.styled";
 
 // import { Component } from "./_cadastro-cliente.styled";
 
-const CadastroCliente: React.FC<{ onBack: () => void}> = ({onBack}) => {
+const CadastroCliente: React.FC<{ onBack: () => void}> = ({ onBack }) => {
     return (
         <div>
             <Typography sx={{ fontWeight: "bold", pd: 2 }}>Dados pessoais</Typography>
@@ -44,6 +46,27 @@ const CadastroCliente: React.FC<{ onBack: () => void}> = ({onBack}) => {
             </Container>
         </div>
     );
+};
+
+export const LoginCliente: React.FC<{ onBack: () => void}> = ({ onBack }) => {
+    return ( 
+        <div>
+            <LoginForm />
+            <LoginButtonsContainer>
+                <Button 
+                    variant="outlined" 
+                    color="primary" 
+                    type="button"
+                    onClick={onBack}
+                >
+                    Voltar para detalhes da diária
+                </Button>
+                <Button variant="contained" color="secondary" type="submit">
+                    Ir para pagamento
+                </Button>
+            </LoginButtonsContainer>
+        </div>
+    )
 };
 
 export default CadastroCliente;

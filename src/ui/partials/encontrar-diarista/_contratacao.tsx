@@ -2,16 +2,15 @@ import { Button, Paper } from "@mui/material";
 import useContratacao from "data/hooks/pages/useContratacao.page";
 import useIsMobile from "data/hooks/useIsMobile";
 import React, { PropsWithChildren } from "react";
-import { FormProvider } from "react-hook-form"; 
+import { FormProvider } from "react-hook-form";
 import PageTitle from "ui/components/data-display/PageTitle/PageTitle";
 import SideInformation from "ui/components/data-display/SideInformation/SideInformation";
 import SafeEnvironment from "ui/components/feedback/SafeEnvironment/SafeEnvironment";
-import { 
-    UserFormContainer,
-    PageFormContainer,
+import {
+    PageFormContainer, UserFormContainer
 } from "ui/components/inputs/UserForm/UserForm";
 import BreadCrumb from "ui/components/navigation/BreadCrumb/BreadCrumb";
-import CadastroCliente from "./_cadastro-cliente";
+import CadastroCliente, { LoginCliente } from "./_cadastro-cliente";
 import DetalhesServico from "./_detalhes-servico";
 
 // import { Component } from "./_contratacao.styled";
@@ -78,6 +77,16 @@ const Contratacao: React.FC<PropsWithChildren> = () => {
                                 <CadastroCliente onBack={() => setStep(1)}/>
                             </form>
                         </FormProvider>
+
+                        {step === 2 && hasLogin && (
+                            <FormProvider {...clientForm}>
+                                <form 
+                                    onSubmit={clientForm.handleSubmit(onClientFormSubmit)}                                   
+                                >
+                                    <LoginCliente onBack={() => setStep(1)}/>
+                                </form>
+                            </FormProvider>
+                        )}
                     </Paper>
                     {!isMobile && step !== 4 && (
                         <SideInformation
