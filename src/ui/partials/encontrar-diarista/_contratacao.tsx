@@ -11,6 +11,7 @@ import {
     PageFormContainer,
 } from "ui/components/inputs/UserForm/UserForm";
 import BreadCrumb from "ui/components/navigation/BreadCrumb/BreadCrumb";
+import CadastroCliente from "./_cadastro-cliente";
 import DetalhesServico from "./_detalhes-servico";
 
 // import { Component } from "./_contratacao.styled";
@@ -26,6 +27,7 @@ const Contratacao: React.FC<PropsWithChildren> = () => {
         setHasLogin,
         clientForm,
         onClientFormSubmit,
+        setStep,
     } = useContratacao();
     const isMobile = useIsMobile();
     return (
@@ -73,7 +75,7 @@ const Contratacao: React.FC<PropsWithChildren> = () => {
                                 onSubmit={clientForm.handleSubmit(onClientFormSubmit)}
                                 hidden={step !== 2 || hasLogin}    
                             >
-                                Client form
+                                <CadastroCliente onBack={() => setStep(1)}/>
                             </form>
                         </FormProvider>
                     </Paper>

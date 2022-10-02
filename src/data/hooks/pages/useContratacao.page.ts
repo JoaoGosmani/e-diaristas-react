@@ -56,5 +56,6 @@ export default function useContratacao() {
         setHasLogin,
         clientForm,
         onClientFormSubmit,
+        setStep,
     };
 }
