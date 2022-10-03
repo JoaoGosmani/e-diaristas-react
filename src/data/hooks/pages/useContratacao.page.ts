@@ -9,10 +9,12 @@ import {
     PagamentoFormDataInterface
 } from "data/@types/FormInterface";
 import { ServicoInterface } from "data/@types/ServicoInterface";
+import { ExternalServiceContext } from "data/contexts/ExternalServiceContext";
+import { ApiService, linksResolver } from "data/services/ApiService";
 import { DateService } from "data/services/DateService";
 import { FormSchemaService } from "data/services/FormSchemaService";
 import { ValidationService } from "data/services/ValidationService";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import useApi from "../useApi.hook";
 
@@ -70,7 +72,32 @@ export default function useContratacao() {
             dadosFaxina?.quantidade_quartos,
             dadosFaxina?.quantidade_quintais,
             dadosFaxina?.quantidade_salas,
-        ]);
+        ]),
+        cepFaxina = serviceForm.watch("endereco.cep"),
+        [podemosAtender, setPodemosAtender] = useState(false),
+        { externalServicesState } = useContext(ExternalServiceContext);
+
+        useEffect(() => {
+            const cep = (cepFaxina ?? "").replace(/\D/g, "");
+            if (ValidationService.cep(cep)) {
+                const linkDisponibilidade = linksResolver(
+                    externalServicesState.externalService,
+                    "verificar_disponibilidade_atendimento"
+                );
+
+                if (linkDisponibilidade) {
+                    ApiService.request({
+                        url: linkDisponibilidade.uri,
+                        method: linkDisponibilidade.type,
+                        params: { cep },
+                    })
+                        .then((response) => setPodemosAtender(true))
+                        .catch((_erro) => setPodemosAtender(false));
+                }
+            } else {
+                setPodemosAtender(false);
+            }
+        }, [cepFaxina, externalServicesState.externalService]);
 
         useEffect(() => {
             if (
@@ -185,5 +212,6 @@ export default function useContratacao() {
         tamanhoCasa,
         tipoLimpeza,
         totalPrice,
+        podemosAtender,
     };
 }
