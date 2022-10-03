@@ -7,9 +7,12 @@ export interface NovaDiariaFormDataInterface {
     faxina: DiariaInterface;
 }
 
-export interface CadastroClienteFormDataInterface {
+export interface CadastroUserInterface {
     usuario: UserInterface;
 }
+
+export interface CadastroClienteFormDataInterface 
+    extends CadastroUserInterface {}
 
 export interface LoginFormDataInterface<T> {
     login: T;
