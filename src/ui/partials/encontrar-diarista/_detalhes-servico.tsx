@@ -18,7 +18,7 @@ interface DetalhesServicoProps {
     podemosAtender?: boolean;
 }
 
-const houseParts = [
+export const houseParts = [
     {
         singular: "Cozinha",
         plural: "Cozinhas",
