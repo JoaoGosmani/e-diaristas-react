@@ -1,7 +1,7 @@
 import * as yup from "yup";
-import { ValidationService } from "./ValidationService";
 import { DateService } from "./DateService";
 import { PaymentService } from "./PaymentService";
+import { ValidationService } from "./ValidationService";
 
 export const FormSchemaService = {
     newContact() {
@@ -55,7 +55,19 @@ export const FormSchemaService = {
                                 card_expiration_date: "",
                             }).card_number
                     ),
-                    nome_cartao: yup.string(),
+                    nome_cartao: yup
+                        .string()
+                        .min(3, "Mínimo de três caracteres")
+                        .test(
+                            "card_holder_name", 
+                            "Nome do cartão possui número", 
+                            (value) => {
+                                if (value) {
+                                    return !/[0-9]/.test(value);
+                                }
+                                return false;
+                            }
+                        ),
                     validade: yup.string().test(
                         "card_expiration_date", 
                         "Data de validade inválida", 

@@ -17,9 +17,11 @@ import { ApiServiceHateoas, linksResolver } from "data/services/ApiService";
 import { DateService } from "data/services/DateService";
 import { FormSchemaService } from "data/services/FormSchemaService";
 import { LoginService } from "data/services/LoginService";
+import { PaymentService } from "data/services/PaymentService";
 import { TextFormatService } from "data/services/TextFormatService";
 import { UserService } from "data/services/UserService";
 import { ValidationService } from "data/services/ValidationService";
+import { CardInterface } from "pagarme";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import useApiHateoas from "../useApi.hook";
@@ -219,7 +221,32 @@ export default function useContratacao() {
         return loginSuccess;
     }
     
-    function onPaymentFormSubmit(data: PagamentoFormDataInterface) {}
+    async function onPaymentFormSubmit(data: PagamentoFormDataInterface) {
+        const cartao = {
+            card_number: data.pagamento.numero_cartao.replaceAll(" ", ""),
+            card_holder_name: data.pagamento.nome_cartao,
+            card_cvv: data.pagamento.codigo,
+            card_expiration_date: data.pagamento.validade,
+        } as CardInterface;
+
+        const hash = await PaymentService.getHash(cartao);
+
+        ApiServiceHateoas(novaDiaria.links, "pagar_diaria", async (request) => {
+            try {
+                await request({
+                    data: {
+                        card_hash: hash,
+                    },
+                });
+                setStep(4);
+            } catch (error) {
+                paymentForm.setError("pagamento_recusado", {
+                    type: "manual",
+                    message: "Pagamento recusado",
+                });
+            }
+        });
+    }
 
     function calcularTempoServico(
         dadosFaxina: DiariaInterface,
