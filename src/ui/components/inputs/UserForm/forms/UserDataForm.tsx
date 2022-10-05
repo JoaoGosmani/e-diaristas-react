@@ -19,7 +19,7 @@ export const UserDataForm: React.FC<UserDataFormProps> = ({
         formState: { errors },
         control,
     } = useFormContext<FormValues>(),
-    { user } = useContext(UserContext).useState;
+    { user } = useContext(UserContext).userState;
     
     return (
         <UserData>

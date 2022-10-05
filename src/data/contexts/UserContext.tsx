@@ -6,8 +6,8 @@ import {
 import React, { createContext, PropsWithChildren} from "react";
 
 const initialValue: UserReducerInterface = {
-    useDispatch: () => {},
-    useState: initialState,
+    userDispatch: () => {},
+    userState: initialState,
 };
 
 export const UserContext = createContext(initialValue);

@@ -14,7 +14,7 @@ export default function useAddressForm() {
         setValue,
         formState: { errors },
     } = useFormContext<FormValues>(),
-    { userAddress } = useContext(UserContext).useState,    
+    { userAddress } = useContext(UserContext).userState,    
     [addressState, addressCity, addressCep] = watch([
         "endereco.estado", 
         "endereco.cidade", 

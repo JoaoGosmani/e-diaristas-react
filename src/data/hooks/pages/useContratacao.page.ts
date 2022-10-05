@@ -9,15 +9,17 @@ import {
     PagamentoFormDataInterface
 } from "data/@types/FormInterface";
 import { ServicoInterface } from "data/@types/ServicoInterface";
+import { UserInterface } from "data/@types/UserInterface";
 import { ExternalServiceContext } from "data/contexts/ExternalServiceContext";
-import { ApiService, ApiServiceHateoas, linksResolver } from "data/services/ApiService";
+import { UserContext } from "data/contexts/UserContext";
+import { ApiServiceHateoas } from "data/services/ApiService";
 import { DateService } from "data/services/DateService";
 import { FormSchemaService } from "data/services/FormSchemaService";
+import { TextFormatService } from "data/services/TextFormatService";
 import { ValidationService } from "data/services/ValidationService";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import useApiHateoas from "../useApi.hook";
-import useApi from "../useApi.hook";
 
 export default function useContratacao() {
     const [step, setStep] = useState(1),
@@ -79,7 +81,9 @@ export default function useContratacao() {
             dadosFaxina?.quantidade_salas,
         ]),
         cepFaxina = serviceForm.watch("endereco.cep"),
-        [podemosAtender, setPodemosAtender] = useState(false);
+        [podemosAtender, setPodemosAtender] = useState(false),
+        { userState, userDispatch } = useContext(UserContext),
+        [novaDiaria, setNovaDiaria] = useState({} as DiariaInterface);
 
         useEffect(() => {
             const cep = (cepFaxina ?? "").replace(/\D/g, "");
@@ -135,7 +139,13 @@ export default function useContratacao() {
             dadosFaxina?.hora_termino,
         ]);
 
-    function onServiceFormSubmit(data: NovaDiariaFormDataInterface) {}
+    function onServiceFormSubmit(data: NovaDiariaFormDataInterface) {
+        if (userState.user.nome_completo) {
+            criarDiaria(userState.user);
+        } else {
+            setStep(2);
+        }
+    }
 
     function onClientFormSubmit(data: CadastroClienteFormDataInterface) {}
 
@@ -193,6 +203,31 @@ export default function useContratacao() {
         }
 
         return comodos;
+    }
+
+    async function criarDiaria(user: UserInterface) {
+        if (user.nome_completo) {
+            const  { endereco, faxina } = serviceForm.getValues();
+            ApiServiceHateoas(user.links, "cadastrar_diaria", async (request) => {
+                const { data: novaDiaria } = await request<DiariaInterface>({ 
+                    data: {
+                        ...faxina,
+                        ...endereco,
+                        cep: TextFormatService.getNumbersFromText(endereco.cep),
+                        preco: totalPrice,
+                        tempo_atendimento: totalTime,
+                        data_atendimento: TextFormatService.reverseDate(
+                            faxina.data_atendimento + "T" + faxina.hora_inicio
+                        ),
+                    },
+                });
+
+                if (novaDiaria) {
+                    setStep(3);
+                    setNovaDiaria(novaDiaria);
+                }
+            });
+        }
     }
         
     return { 
