@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { houseParts } from "@partials/encontrar-diarista/_detalhes-servico";
+import { ApiLinksInterface } from "data/@types/ApiLinksInterface";
 import { DiariaInterface } from "data/@types/DiariaInterface";
 import {
     CadastroClienteFormDataInterface,
@@ -9,14 +10,15 @@ import {
     PagamentoFormDataInterface
 } from "data/@types/FormInterface";
 import { ServicoInterface } from "data/@types/ServicoInterface";
-import { UserInterface } from "data/@types/UserInterface";
+import { UserInterface, UserType } from "data/@types/UserInterface";
 import { ExternalServiceContext } from "data/contexts/ExternalServiceContext";
 import { UserContext } from "data/contexts/UserContext";
-import { ApiServiceHateoas } from "data/services/ApiService";
+import { ApiServiceHateoas, linksResolver } from "data/services/ApiService";
 import { DateService } from "data/services/DateService";
 import { FormSchemaService } from "data/services/FormSchemaService";
 import { LoginService } from "data/services/LoginService";
 import { TextFormatService } from "data/services/TextFormatService";
+import { UserService } from "data/services/UserService";
 import { ValidationService } from "data/services/ValidationService";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -148,7 +150,42 @@ export default function useContratacao() {
         }
     }
 
-    function onClientFormSubmit(data: CadastroClienteFormDataInterface) {}
+    async function onClientFormSubmit(data: CadastroClienteFormDataInterface) {
+        const newUserLink = linksResolver(
+            externalServicesState.externalService,
+            "cadastrar_usuario"
+        );
+
+        if (newUserLink) {
+            try {
+                await cadastrarUsuario(data, newUserLink);
+            } catch (error) {
+                UserService.handleNewUserError(error, clientForm);
+            }
+        }
+    }
+
+    async function cadastrarUsuario(
+        data: CadastroClienteFormDataInterface,
+        link: ApiLinksInterface
+    ) {
+        const newUser = await UserService.cadastrar(
+            data.usuario, 
+            UserType.Cliente, 
+            link
+        );
+
+        if (newUser) {
+            const loginSuccess = await login(
+                { email: data.usuario.email, password: data.usuario.password ?? "" }, 
+                newUser
+            );
+
+            if (loginSuccess) {
+                criarDiaria(newUser);
+            }
+        }
+    }
  
     async function onLoginFormSubmit(
         data: LoginFormDataInterface<CredenciaisInterface>
