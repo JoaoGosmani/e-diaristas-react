@@ -15,6 +15,7 @@ import { UserContext } from "data/contexts/UserContext";
 import { ApiServiceHateoas } from "data/services/ApiService";
 import { DateService } from "data/services/DateService";
 import { FormSchemaService } from "data/services/FormSchemaService";
+import { LoginService } from "data/services/LoginService";
 import { TextFormatService } from "data/services/TextFormatService";
 import { ValidationService } from "data/services/ValidationService";
 import { useContext, useEffect, useMemo, useState } from "react";
@@ -148,10 +149,38 @@ export default function useContratacao() {
     }
 
     function onClientFormSubmit(data: CadastroClienteFormDataInterface) {}
-
-    function onLoginFormSubmit(
+ 
+    async function onLoginFormSubmit(
         data: LoginFormDataInterface<CredenciaisInterface>
-    ) {}
+    ) {
+        const loginSuccess = await login(data.login);
+        if (loginSuccess) {
+            const user = await LoginService.getUser();
+            if (user) {
+                criarDiaria(user);
+                setStep(3);
+            }
+        }
+    }
+
+    
+    async function login(
+        credentials: CredenciaisInterface,
+        user?: UserInterface
+    ): Promise<boolean> {
+        const loginSuccess = await LoginService.login(credentials);
+
+        if (loginSuccess) {
+            if (!user) {
+                user = await LoginService.getUser();
+            }
+
+            userDispatch({ type: "SET_USER", payload: user });
+        } else {
+            setLoginError("E-mail e/ou Senha inválidos");
+        }
+        return loginSuccess;
+    }
     
     function onPaymentFormSubmit(data: PagamentoFormDataInterface) {}
 
