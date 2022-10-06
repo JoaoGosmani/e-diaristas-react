@@ -309,9 +309,10 @@ export default function useContratacao() {
                         cep: TextFormatService.getNumbersFromText(endereco.cep),
                         preco: totalPrice,
                         tempo_atendimento: totalTime,
-                        data_atendimento: TextFormatService.reverseDate(
-                            faxina.data_atendimento + "T" + faxina.hora_inicio
-                        ),
+                        data_atendimento: 
+                            TextFormatService.reverseDate(faxina.data_atendimento as string) + 
+                            "T" + 
+                            faxina.hora_inicio,
                     },
                 });
 
