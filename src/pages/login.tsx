@@ -17,7 +17,7 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const Login: React.FC = () => {
-  const { formMethods, onSubmit } = useLogin();
+  const { formMethods, onSubmit, externalServicesState, errorMessage } = useLogin();
   return (
     <FormProvider {...formMethods}>
       <SafeEnvironment />
@@ -27,15 +27,18 @@ const Login: React.FC = () => {
           onSubmit={formMethods.handleSubmit(onSubmit)}
         >
           <LoginForm />
-
-          <Typography color={"error"} align={"center"}>
-            Erro
-          </Typography>
+          
+            {errorMessage && (
+              <Typography color={"error"} align={"center"}>
+                {errorMessage}
+            </Typography>
+            )}
           <LoginButton
             size={"large"}
             variant={"contained"}
             color={"secondary"}
             type={"submit"}
+            disabled={externalServicesState?.externalService?.length === 0}
           >
             Entrar
           </LoginButton>
