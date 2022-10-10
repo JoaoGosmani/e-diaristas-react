@@ -10,6 +10,7 @@ import Head from "next/head";
 import { MainProvider } from "data/contexts/MainContext";
 import useRouterGuard, { privateRoutes } from "data/hooks/useRouterGuard.hook";
 import { UserContext } from "data/contexts/UserContext";
+import { LoginService } from "data/services/LoginService";
 
 function App({ Component, pageProps }: AppProps) {
   const { userState } = useContext(UserContext);
@@ -24,6 +25,12 @@ function App({ Component, pageProps }: AppProps) {
     }
     return true;
   }
+
+  async function onLogout() {
+    await LoginService.logout();
+    window.location.reload();
+  }
+
   return (
     <>
       <Head>
@@ -31,7 +38,7 @@ function App({ Component, pageProps }: AppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <AppContainer>
-          <Header user={userState.user} />
+          <Header user={userState.user} onLogout={onLogout} />
           <main>
             {canShow() ? (
               <Component {...pageProps} />

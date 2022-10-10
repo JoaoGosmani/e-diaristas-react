@@ -13,8 +13,8 @@ const UserProfileAvatar:React.FC<PropsWithChildren<UserProfileAvatarProps>> = (
 ) => {
     const hasUser = props.user.nome_completo.length > 0;
     return (
-        <Button onClick={props.onClick}>
-            <Grid container spacing={1} color={"inherit"} wrap="nowrap">
+        <Button color={"inherit"} onClick={props.onClick}>
+            <Grid container spacing={1} wrap="nowrap">
                 <Grid item>
                     {hasUser ? (
                         <UserAvatar
