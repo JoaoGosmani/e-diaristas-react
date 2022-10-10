@@ -27,7 +27,7 @@ const UserHeaderMenu:React.FC<PropsWithChildren<UserHeaderMenuProps>> = (
                 onClose={props.onMenuClose}  
                 onClick={props.onMenuClick}  
                 anchorOrigin={{
-                    vertical: "top",
+                    vertical: "bottom",
                     horizontal: "right",
                 }}
                 transformOrigin={{

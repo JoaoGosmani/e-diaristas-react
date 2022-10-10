@@ -31,7 +31,7 @@ function App({ Component, pageProps }: AppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <AppContainer>
-          <Header />
+          <Header user={userState.user} />
           <main>
             {canShow() ? (
               <Component {...pageProps} />
