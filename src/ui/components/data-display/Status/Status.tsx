@@ -1,9 +1,10 @@
+import { TextColor } from "data/@types/DiariaInterface";
 import React, { PropsWithChildren } from "react";
 // import {} from "@mui/material";
 import { StatusStyled } from "./Status.styled";
 
 export interface StatusProps {
-    colors?: "success" | "error" | "warning" | "primary" | "secondary"; 
+    colors?: TextColor; 
 }
 
 const Status:React.FC<PropsWithChildren<StatusProps>> = ({ 
