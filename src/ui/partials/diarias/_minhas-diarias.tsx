@@ -3,6 +3,7 @@ import useMinhasDiarias from "data/hooks/pages/diarias/useMinhasDiarias.page";
 import { DiariaService } from "data/services/DiariaService";
 import { TextFormatService } from "data/services/TextFormatService";
 import React, { PropsWithChildren } from "react";
+import DataList from "ui/components/data-display/DataList/DataList";
 import PageTitle from "ui/components/data-display/PageTitle/PageTitle";
 import Status from "ui/components/data-display/Status/Status";
 import Table, { TableCell, TablePagination, TableRow } from "ui/components/data-display/Table/Table";
@@ -24,7 +25,47 @@ const MinhasDiarias: React.FC<PropsWithChildren> = () => {
             <PageTitle title="Minhas diárias" />
             {filteredData.length > 0 ? (
                 isMobile ? (
-                    ""
+                    <>
+                        {filteredData.map((item) => {
+                            return (
+                                <DataList 
+                                    key={item.id}
+                                    header={
+                                        <>
+                                            Data:
+                                            {TextFormatService.reverseDate(
+                                                item.data_atendimento as string
+                                            )}
+                                            <br />
+                                            {item.nome_servico}
+                                        </>
+                                    }
+                                    body={
+                                        <>
+                                            Status: {DiariaService.getStatus(item.status!).label}
+                                            <br />
+                                            Valor: {TextFormatService.currency(item.preco)}
+                                        </>
+                                    }
+                                    actions={
+                                        <>
+                                            <Button 
+                                                component={Link} 
+                                                href=""
+                                                color={"inherit"}
+                                                variant={"outlined"}
+                                            >
+                                                Detalhes
+                                            </Button>
+                                            <Button color={"error"} variant={"contained"}>
+                                                Cancelar
+                                            </Button>
+                                        </>
+                                    }
+                                />
+                            )
+                        })}
+                    </>
                 ) : (
                     <>
                         <Table 

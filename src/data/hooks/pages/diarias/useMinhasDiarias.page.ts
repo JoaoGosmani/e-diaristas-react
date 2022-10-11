@@ -10,7 +10,7 @@ export default function useMinhasDiarias() {
         } = useContext(DiariaContext),
         filteredData = diarias,
         { currentPage, setCurrentPage, totalPages, itemsPerPage } = usePagination(
-            [], 
+            diarias, 
             5
         );
     
