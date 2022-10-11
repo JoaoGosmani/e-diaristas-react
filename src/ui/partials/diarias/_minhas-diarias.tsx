@@ -4,7 +4,8 @@ import React, { PropsWithChildren } from "react";
 // import { Component } from "./_minhas-diarias.styled";
 
 const MinhasDiarias: React.FC<PropsWithChildren> = () => {
-    const { isMobile } = useMinhasDiarias();
+    const { isMobile, currentPage, setCurrentPage, totalPages, itemsPerPage } = 
+        useMinhasDiarias();
     return (
         <div>
             <div>MinhasDiarias</div>

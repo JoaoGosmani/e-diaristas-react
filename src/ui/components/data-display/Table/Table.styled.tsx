@@ -44,6 +44,9 @@ export const TableCellStyled = styled(TableCell)`
 `; 
 
 export const TablePaginationStyled = styled(Pagination)`
+    display: flex;
+    justify-content: flex-end;
+    margin: ${({ theme }) => theme.spacing(4)};
 `; 
 
 export const TableContainerStyled = styled(TableContainer)``; 
