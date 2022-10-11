@@ -1,6 +1,7 @@
 import React from 'react';
 import { GetStaticProps } from 'next';
 import MinhasDiarias from '@partials/diarias/_minhas-diarias';
+import { DiariaProvider } from 'data/contexts/DiariaContext';
 
 // import { Component } from "@styles/pages/diarias.styled";
 
@@ -14,9 +15,9 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const Diarias: React.FC = () => {
   return (
-    <div>
+    <DiariaProvider>
       <MinhasDiarias />
-    </div>
+    </DiariaProvider>
   );
 };
 

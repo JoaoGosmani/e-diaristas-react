@@ -48,7 +48,7 @@ export function useDiariaReducer(): DiariaReducerInterface {
         diarias = useApiHateoas<DiariaInterface[]>(
             userState.user.links,
             "lista_diarias"
-        );
+        ).data;
 
     useEffect(() => {
         if (diarias) {
