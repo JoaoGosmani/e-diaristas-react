@@ -6,7 +6,11 @@ import React, { PropsWithChildren } from "react";
 import DataList from "ui/components/data-display/DataList/DataList";
 import PageTitle from "ui/components/data-display/PageTitle/PageTitle";
 import Status from "ui/components/data-display/Status/Status";
-import Table, { TableCell, TablePagination, TableRow } from "ui/components/data-display/Table/Table";
+import Table, { 
+    TableCell, 
+    TablePagination, 
+    TableRow 
+} from "ui/components/data-display/Table/Table";
 import Link from "ui/components/navigation/Link/Link";
 
 // import { Component } from "./_minhas-diarias.styled";
@@ -19,6 +23,10 @@ const MinhasDiarias: React.FC<PropsWithChildren> = () => {
         totalPages, 
         itemsPerPage,
         filteredData,
+        podeVisualizar,
+        podeCancelar,
+        podeConfirmar,
+        podeAvaliar,
     } = useMinhasDiarias();
     return (
         <Container sx={{ mb: 5, p: 0 }}>
@@ -49,17 +57,31 @@ const MinhasDiarias: React.FC<PropsWithChildren> = () => {
                                     }
                                     actions={
                                         <>
-                                            <Button 
-                                                component={Link} 
-                                                href=""
-                                                color={"inherit"}
-                                                variant={"outlined"}
-                                            >
-                                                Detalhes
-                                            </Button>
-                                            <Button color={"error"} variant={"contained"}>
-                                                Cancelar
-                                            </Button>
+                                            {podeVisualizar(item) && (
+                                                <Button 
+                                                    component={Link} 
+                                                    href={`?id=${item.id}`}
+                                                    color={"inherit"}
+                                                    variant={"outlined"}
+                                                >
+                                                    Detalhes
+                                                </Button>
+                                            )}
+                                            {podeCancelar(item) && (
+                                                <Button color={"error"} variant={"contained"}>
+                                                    Cancelar
+                                                </Button>
+                                            )}
+                                            {podeConfirmar(item) && (
+                                                <Button color={"success"} variant={"contained"}>
+                                                    Confirmar Presença
+                                                </Button>
+                                            )}
+                                            {podeAvaliar(item) && (
+                                                <Button color={"success"} variant={"contained"}>
+                                                    Avaliar
+                                                </Button>
+                                            )}
                                         </>
                                     }
                                 />
@@ -88,12 +110,24 @@ const MinhasDiarias: React.FC<PropsWithChildren> = () => {
                                         </Status>
                                     </TableCell>
                                     <TableCell>{item.nome_servico}</TableCell>
-                                    <TableCell>{TextFormatService.currency(item.preco)}</TableCell>
                                     <TableCell>
-                                        <Link href="">Detalhes</Link>
+                                        {TextFormatService.currency(item.preco)}
                                     </TableCell>
                                     <TableCell>
-                                        <Button color={"error"}>Cancelar</Button>
+                                        {podeVisualizar(item) && ( 
+                                            <Link href={`?id=${item.id}`}>Detalhes</Link>
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {podeCancelar(item) && (
+                                            <Button color={"error"}>Cancelar</Button>
+                                        )}
+                                        {podeConfirmar(item) && (
+                                            <Button color={"success"}>Confirmar Presença</Button>
+                                        )}
+                                        {podeAvaliar(item) && (
+                                            <Button color={"success"}>Avaliar</Button>
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             )}
