@@ -1,4 +1,5 @@
 import { ApiLinksInterface } from "./ApiLinksInterface";
+import { UserInterface } from "./UserInterface";
 
 export interface DiariaInterface {
     id?: number;
@@ -29,6 +30,8 @@ export interface DiariaInterface {
     servico: number;
     nome_servico: string;
     links: ApiLinksInterface[];
+    cliente?: UserInterface;
+    diarista?: UserInterface;
 }
 
 export enum DiariaStatus {
