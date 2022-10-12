@@ -29,4 +29,10 @@ export const DateService = {
         data.setFullYear(data.getFullYear() - 100);
         return data;
     },
+    getTimeFromDate(date: string): string {
+        const [_, time] = date.split("T"),
+            [hours, minutes, ..._rest] = time.split(":");
+
+        return `${hours}:${minutes}`;
+    }
 };
