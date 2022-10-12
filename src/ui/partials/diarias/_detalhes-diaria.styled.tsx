@@ -38,3 +38,26 @@ export const JobDetails = styled(Paper)`
         margin-bottom: ${({ theme }) => theme.spacing(5)};
     }
 `;
+
+export const UserTitle = styled(Typography)`
+    color: ${({ theme }) => theme.palette.primary.main};
+    font-weight: bold;
+
+    ${({ theme }) => theme.breakpoints.down("md")} {
+        background-color: ${({ theme }) => theme.palette.grey[100]};
+        padding: ${({ theme }) => theme.spacing(3)};
+        margin: ${({ theme }) => theme.spacing(0, -3)};
+    }
+`;
+
+export const UserCard = styled(Paper)`
+    display: flex;
+    flex-direction: column;
+    gap: ${({ theme }) => theme.spacing()};
+    padding: ${({ theme }) => theme.spacing(4)};
+
+    ${({ theme }) => theme.breakpoints.down("md")} {
+        padding: 0;
+        box-shadow: none;
+    }
+`;
