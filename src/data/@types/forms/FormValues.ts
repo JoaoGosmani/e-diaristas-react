@@ -7,6 +7,7 @@ export type FormValues = {
         nascimento: string;
         cpf: string;
         telefone: string;
+        chave_pix?: string;
     };
 
     pagamento: {
