@@ -25,7 +25,9 @@ export default  function useCadastroDiarista() {
         { externalServicesState } = useContext(ExternalServiceContext),
         [load, setLoad] = useState(false),
         [newAddress, setNewAddress] = useState<EnderecoInterface>(),
-        [newUser, setNewUser] = useState<UserInterface>();
+        [newUser, setNewUser] = useState<UserInterface>(),
+        enderecosAtendidos = addressListForm.watch("enderecosAtendidos"),
+        [sucessoCadastro, setSucessoCadastro] = useState(false);
 
     async function onUserSubmit(data: CadastroDiaristaFormDataInterface) {
         const newUserLink = linksResolver(
@@ -78,6 +80,31 @@ export default  function useCadastroDiarista() {
         });
     }
 
+    async function onAddressSubmit(data: CadastroDiaristaFormDataInterface) {
+        if (newUser) {
+            ApiServiceHateoas(
+                newUser.links,
+                "relacionar_cidades",
+                async (request) => {
+                    try {
+                        setLoad(true);
+                        await request({
+                            data: {
+                                cidades: data.enderecosAtendidos,
+                            },
+                        });
+                        setSucessoCadastro(true);
+                    } catch (error) {
+                        
+                    } finally {
+                        setLoad(false);
+                    }
+                    
+                }
+            );
+        }
+    }
+
     return { 
         step, 
         setStep, 
@@ -86,5 +113,9 @@ export default  function useCadastroDiarista() {
         addressListForm, 
         onUserSubmit,
         load,
+        onAddressSubmit,
+        enderecosAtendidos,
+        newAddress,
+        sucessoCadastro,
     };
 }
