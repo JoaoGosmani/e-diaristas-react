@@ -19,6 +19,7 @@ import { FormProvider } from 'react-hook-form';
 import { Button, Container, Divider, Paper, Typography } from '@mui/material';
 import FinancialForm from 'ui/components/inputs/UserForm/forms/FinancialForm';
 import NewContactForm from 'ui/components/inputs/UserForm/forms/NewContactForm';
+import { CitiesForm } from 'ui/components/inputs/UserForm/forms/CitiesForm';
 
 // import { Component } from "@styles/pages/cadastro/diarista.styled";
 
@@ -31,7 +32,7 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const Diarista: React.FC = () => {
-  const { breadcrumbItems, step, setStep, userForm } = useCadastroDiarista(),
+  const { breadcrumbItems, step, setStep, userForm, addressListForm } = useCadastroDiarista(),
     isMobile = useIsMobile();
 
   useEffect(() => {
@@ -115,6 +116,22 @@ const Diarista: React.FC = () => {
                     type={"submit"}
                   >
                     Cadastrar e escolher cidades
+                  </Button>
+                </Container>
+              </Paper>
+            </FormProvider>
+          )}
+
+          {step === 2 && (
+            <FormProvider {...addressListForm}>
+              <Paper component={"form"} sx={{ p: 4 }}>
+                <Typography sx={{ fontWeight: "bold", pb: 2 }}>
+                  Selecione a cidade
+                </Typography>
+                <CitiesForm estado={"SP"} />
+                <Container sx={{ textAlign: "center" }}>
+                  <Button variant="contained" color="secondary" type={"submit"}>
+                    Finalizar o cadastro
                   </Button>
                 </Container>
               </Paper>
