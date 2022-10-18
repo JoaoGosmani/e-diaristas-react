@@ -17,7 +17,8 @@ export default function useOportunidades() {
             oportunidades ?? [], 
             5
         ),
-        [oportunidadeSelecionada, setOportunidadeSelecionada] = useState<Oportunidade>();
+        [oportunidadeSelecionada, setOportunidadeSelecionada] = useState<Oportunidade>(),
+        [mensagemSnackbar, setMensagemSnackbar] = useState("");
 
     function totalComodos(oportunidade: Oportunidade): number {
         let total = 0;
@@ -46,5 +47,6 @@ export default function useOportunidades() {
         itemsPerPage,
         oportunidadeSelecionada, 
         setOportunidadeSelecionada,
+        mensagemSnackbar, 
     };
 }
