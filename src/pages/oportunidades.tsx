@@ -33,6 +33,8 @@ const Oportunidades: React.FC = () => {
     oportunidadeSelecionada, 
     setOportunidadeSelecionada,
     mensagemSnackbar, 
+    setMensagemSnackbar,
+    seCandidatar,
   } = useOportunidades();
 
   return (
@@ -136,6 +138,7 @@ const Oportunidades: React.FC = () => {
         isOpen={oportunidadeSelecionada != undefined}
         onClose={() => setOportunidadeSelecionada(undefined)}
         title={"Se candidatar à diária"}
+        onConfirm={() => seCandidatar(oportunidadeSelecionada!)}
         subtitle={"Tem certeza que deseja se candidatar à diária abaixo?"}
       >
         <div>
@@ -208,7 +211,7 @@ const Oportunidades: React.FC = () => {
         open={mensagemSnackbar.length > 0}
         message={mensagemSnackbar}
         autoHideDuration={4000}
-        onClose={() => {}}
+        onClose={() => setMensagemSnackbar("")}
       />
     </Container>
   );

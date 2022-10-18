@@ -1,10 +1,11 @@
 import { Oportunidade } from "data/@types/OportunidadeInterface";
 import { UserContext } from "data/contexts/UserContext";
-import { linksResolver } from "data/services/ApiService";
+import { ApiServiceHateoas, linksResolver } from "data/services/ApiService";
 import { useContext, useState } from "react";
 import useApiHateoas from "../useApi.hook"
 import useIsMobile from "../useIsMobile";
 import usePagination from "../usePagination.hook";
+import { mutate } from "swr";
 
 export default function useOportunidades() {
     const { userState: { user },} = useContext(UserContext),
@@ -36,6 +37,25 @@ export default function useOportunidades() {
         return linksResolver(oportunidade.links, "candidatar_diaria") != undefined;
     }
 
+    function seCandidatar(oportunidade: Oportunidade) {
+        ApiServiceHateoas(
+            oportunidade.links,
+            "candidatar_diaria",
+            async (request) => {
+                try {
+                    await request();
+                    setMensagemSnackbar("Candidatura enviada!");
+                    setOportunidadeSelecionada(undefined);
+                    atualizarOportunidades();
+                } catch (error) {}
+            }
+        )
+    }
+
+    function atualizarOportunidades() {
+        mutate("lista_oportunidades");
+    }
+
     return { 
         oportunidades, 
         isMobile, 
@@ -47,6 +67,8 @@ export default function useOportunidades() {
         itemsPerPage,
         oportunidadeSelecionada, 
         setOportunidadeSelecionada,
-        mensagemSnackbar, 
+        mensagemSnackbar,
+        setMensagemSnackbar, 
+        seCandidatar,
     };
 }
