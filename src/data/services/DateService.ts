@@ -34,5 +34,11 @@ export const DateService = {
             [hours, minutes, ..._rest] = time.split(":");
 
         return `${hours}:${minutes}`;
-    }
+    },
+    getDifferenceHours(dateTime: Date): number {
+        const now = Date.now(),
+            futureDate = dateTime.getTime();
+
+        return (futureDate - now) / 1000 / 60 / 60;
+    },
 };

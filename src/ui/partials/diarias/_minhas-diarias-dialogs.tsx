@@ -146,3 +146,70 @@ export const ConfirmDialog: React.FC<DialogProps> = (props) => {
         </Dialog>
     )
 }
+
+interface CancelDialogProps extends Omit<DialogProps, "onConfirm"> {
+    onConfirm: (diaria: DiariaInterface, motivo: string) => void;
+}
+
+export const CancelDialog: React.FC<CancelDialogProps> = (props) => {
+    const [motivo, setMotivo] = useState(""),
+        [errorMessage, setErrorMessage] = useState(""),
+        {
+            userState: { user },
+        } = useContext(UserContext);
+
+    function tentarCancelar() {
+        if (motivo.length > 3) {
+            props.onConfirm(props.diaria, motivo);
+        } else {
+            setErrorMessage("Digite o motivo do cancelamento");
+        }
+    }
+
+    function getAviso(): string {
+        if (user.id) {
+            if (user.tipo_usuario === UserType.Diarista) {
+                return "Ao cancelar uma diária, você pode ser penalizado(a) com a diminuição da sua reputação. Quanto menor a sua reputação, menos chance de ser selecionada para as próximas oportunidades. O cancelamento de diárias deve ser feito somente em situações de exceção."
+            } else {
+                const dataAtendimento = new Date(props.diaria.data_atendimento);
+                if (DateService.getDifferenceHours(dataAtendimento) < 24) {
+                    return "Ao cancelar a diária, devido a proximidade com o horário de agendamento do serviço, o sistema cobrará uma multa de 50% sobre o valor da diária. O cancelamento de diárias deve ser feito somente em situações de exceção."
+                }
+                return "Ao cancelar uma diária, o(a) profissional que já havia agendado um dia na agenda acaba sendo prejudicado(a). O cancelamento de diárias deve ser feito somente em situações de exceção."
+            }
+        }
+        return "";
+    }
+
+    return (
+        <Dialog
+            isOpen={true}
+            onClose={props.onCancel}
+            onConfirm={tentarCancelar}
+            title={"Cancelar diária?"}
+            subtitle={"Tem certeza que deseja cancelar a diária abaixo?"}
+        >
+            <JobBox diaria={props.diaria} />
+        
+            <TextField 
+                label={"Digite o motivo do cancelamento"}
+                fullWidth
+                multiline
+                rows={3}
+                value={motivo}
+                onChange={(event) => setMotivo(event.target.value)}
+            />
+
+            <Typography sx={{ py: 2 }} variant={"subtitle2"} color={"textSecondary"}>
+                {getAviso()}
+            </Typography>
+
+            <Snackbar 
+                open={errorMessage.length > 0}
+                message={errorMessage}
+                autoHideDuration={4000}
+                onClose={() => setErrorMessage("")}
+            />
+        </Dialog>
+    )
+}
