@@ -1,5 +1,6 @@
 import React from 'react';
 import { GetStaticProps } from 'next';
+import usePagamentos from 'data/hooks/pages/usePagamentos.page';
 
 // import { Component } from "@styles/pages/pagamentos.styled";
 
@@ -12,6 +13,7 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const Pagamentos: React.FC = () => {
+  const {} = usePagamentos();
   return (
     <div>
       <div>Pagamentos</div>
