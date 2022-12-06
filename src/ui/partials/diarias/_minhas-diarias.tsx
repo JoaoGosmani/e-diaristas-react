@@ -13,6 +13,7 @@ import Table, {
 } from "ui/components/data-display/Table/Table";
 import Link from "ui/components/navigation/Link/Link";
 import { CancelDialog, ConfirmDialog, RatingDialog } from "./_minhas-diarias-dialogs";
+import { ButtonsContainer } from "./_minhas-diarias.styled";
 
 // import { Component } from "./_minhas-diarias.styled";
 
@@ -41,6 +42,13 @@ const MinhasDiarias: React.FC<PropsWithChildren> = () => {
     return (
         <Container sx={{ mb: 5, p: 0 }}>
             <PageTitle title="Minhas diárias" />
+
+            <ButtonsContainer>
+                <Button variant={"contained"}>Pendentes</Button>
+                <Button variant={"outlined"}>Avaliadas</Button>
+                <Button variant={"outlined"}>Canceladas</Button>
+            </ButtonsContainer>
+
             {filteredData.length > 0 ? (
                 isMobile ? (
                     <>
