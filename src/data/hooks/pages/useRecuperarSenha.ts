@@ -3,14 +3,26 @@ import { ApiServiceHateoas } from "data/services/ApiService";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 
-export function useRecuperarSenha() {
+export function useRecuperarSenha(token = '') {
     const router = useRouter(),
         [email, setEmail] = useState(''),
         { externalServicesState } = useContext(ExternalServiceContext),
-        [mensagemSnack, setMensagemSnack] = useState('');
+        [mensagemSnack, setMensagemSnack] = useState(''),
+        [password, setPassword] = useState(''),
+        [confirmarSenha, setConfirmarSenha] = useState(''),
+        [requestEmail, setRequestEmail] = useState(false),
+        [valueInputToken, setValueInputToken] = useState('');
 
     async function pedirTokenRecuperacao() {
         if (email.length > 8) {
+            if (requestEmail) {
+                router.push({
+                    pathname: "/recuperar-senha",
+                    query: { token : valueInputToken },
+                });
+                token = valueInputToken;
+                return;
+            }
             ApiServiceHateoas(
                 externalServicesState.externalService, 
                 "solicitar_alteracao_senha", 
@@ -21,6 +33,7 @@ export function useRecuperarSenha() {
                                 email,
                             },
                         });
+                        setRequestEmail(true);
                         setMensagemSnack(
                             "Uma mensagem foi enviada ao seu e-mail para a recuperação da senha"
                         );
@@ -32,11 +45,47 @@ export function useRecuperarSenha() {
         }
     }
 
+    async function resetarSenha() {
+        if (password.length < 8) {
+            setMensagemSnack("Senha muito curta!");
+            return;
+        }
+        if (password != confirmarSenha) {
+            setMensagemSnack("As senhas estão diferentes!");
+            return;
+        }
+        ApiServiceHateoas(
+            externalServicesState.externalService,
+            "confirmar_alteracao_senha",
+            async (request) => {
+                try {
+                    await request({
+                        data: {
+                            token,
+                            email,
+                            password,
+                        },
+                    });
+                    setMensagemSnack("Senha resetada");
+                } catch (error) {}
+            }
+        )
+    }
+
     return {
         router,
         email,
         setEmail,
         mensagemSnack,
         setMensagemSnack,
+        confirmarSenha,
+        setConfirmarSenha,
+        pedirTokenRecuperacao,
+        resetarSenha,
+        setValueInputToken,
+        password,
+        setPassword,
+        requestEmail,
+        setRequestEmail,
     }
 }
