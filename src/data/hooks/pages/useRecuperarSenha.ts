@@ -15,7 +15,7 @@ export function useRecuperarSenha(token = '') {
 
     async function pedirTokenRecuperacao() {
         if (email.length > 8) {
-            if (requestEmail) {
+            if (valueInputToken) {
                 router.push({
                     pathname: "/recuperar-senha",
                     query: { token : valueInputToken },
@@ -64,10 +64,13 @@ export function useRecuperarSenha(token = '') {
                             token,
                             email,
                             password,
+                            password_confirmation: confirmarSenha,
                         },
                     });
                     setMensagemSnack("Senha resetada");
-                } catch (error) {}
+                } catch (error) {
+                    setMensagemSnack("Erro ao resetar senha");
+                }
             }
         )
     }
